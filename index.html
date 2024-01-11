@@ -228,7 +228,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-01-11 00:33:48" itemprop="dateModified" datetime="2024-01-11T00:33:48+08:00">2024-01-11</time>
+      <time title="修改时间：2024-01-11 16:19:06" itemprop="dateModified" datetime="2024-01-11T16:19:06+08:00">2024-01-11</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -521,7 +521,7 @@
 <p>我们可以参考1.4.4节和1.5.2节的程序。这个书店程序使用<code>total</code>保存最终的销售数据，并通过最外层<code>if</code>语句的条件来完成初始输入的检测和写入。若没有数据输入，则直接跳到后面的<code>else</code>语句，输出一条错误信息，提示用户没有数据输入。若初始输入成功，则创建变量<code>trans</code>来保存后续输入的销售记录，并和之前一样，通过<code>while</code>循环不断读取销售记录。若新输入记录的ISBN号和当前记录的ISBN号相同，则表示是同一本书的销售记录，将二者合并（<code>total += trans;</code>）；若新输入记录的ISBN号和当前记录的ISBN号不同，则当前书的销售记录已处理完毕，且输入了下一本书的销售记录，需要将当前书最终的销售记录输出，并更新<code>total</code>（<code>total = trans;</code>），做好处理下一本书销售记录的准备。</p>
 <p>此外，还需要注意，在<code>while</code>循环结束后，<code>total</code>中还保存着最后一本书的销售数据，因此还需要在<code>while</code>循环结束后，将最后一本书的销售数据输出。</p>
 <p>若已事先将所有销售记录保存在一个文件中，则可以通过文件重定向操作，从文件中快速读取销售记录，并将结果保存在另一个文件中。</p>
-<p>注：<br><a target="_blank" rel="noopener" href="https://github.com/Noah-Zhiyi-Lin/Cpp-Primer-5e.-Answers/tree/main/Chapter-1">本章的练习题答案</a>。</p>
+<p>注：<br><a target="_blank" rel="noopener" href="https://github.com/Noah-Zhiyi-Lin/Cpp-Primer-5e.-Notes-and-Answers/tree/main/Chapter-1">本章的练习题答案</a>。</p>
 
       
     </div>
