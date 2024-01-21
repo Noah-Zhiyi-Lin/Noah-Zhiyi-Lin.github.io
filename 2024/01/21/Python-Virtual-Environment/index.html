@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.0.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha256-yIDrPSXHZdOZhAqiBP7CKzIwMQmRCJ8UeB8Jo17YC4o=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.19.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="1. 前言在使用Python进行开发时，我们经常会遇到以下两个问题： 1.由于误操作，导致全局Python（依赖）环境被破坏，无法运行。 2.某个包无法在当前的Python版本下运行。 对于Linux而言，这两个问题尤为棘手。大多数Linux发行版都自带Python，并且一些系统功能的实现也依赖于Python环境，随意改动系统自带的Python环境，有可能会导致系统无法正常运行。 解决这两个问题最">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何搭建Python虚拟环境">
+<meta property="og:url" content="http://example.com/2024/01/21/Python-Virtual-Environment/index.html">
+<meta property="og:site_name" content="Noah&#39;s Lab">
+<meta property="og:description" content="1. 前言在使用Python进行开发时，我们经常会遇到以下两个问题： 1.由于误操作，导致全局Python（依赖）环境被破坏，无法运行。 2.某个包无法在当前的Python版本下运行。 对于Linux而言，这两个问题尤为棘手。大多数Linux发行版都自带Python，并且一些系统功能的实现也依赖于Python环境，随意改动系统自带的Python环境，有可能会导致系统无法正常运行。 解决这两个问题最">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2024/01/21/Python-Virtual-Environment/image1.png">
+<meta property="article:published_time" content="2024-01-21T15:17:51.000Z">
+<meta property="article:modified_time" content="2024-01-21T16:03:34.097Z">
+<meta property="article:author" content="Noah Z. Lin">
+<meta property="article:tag" content="学习笔记">
+<meta property="article:tag" content="编程语言">
+<meta property="article:tag" content="Python">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2024/01/21/Python-Virtual-Environment/image1.png">
+
+
+<link rel="canonical" href="http://example.com/2024/01/21/Python-Virtual-Environment/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2024/01/21/Python-Virtual-Environment/","path":"2024/01/21/Python-Virtual-Environment/","title":"如何搭建Python虚拟环境"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>如何搭建Python虚拟环境 | Noah's Lab</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Noah's Lab</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E5%89%8D%E8%A8%80"><span class="nav-text">1. 前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Python%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83%E7%AE%80%E4%BB%8B"><span class="nav-text">2. Python虚拟环境简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E4%BD%BF%E7%94%A8venv%E6%A8%A1%E5%9D%97%E6%90%AD%E5%BB%BAPython%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83"><span class="nav-text">3. 使用venv模块搭建Python虚拟环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E4%BD%BF%E7%94%A8pyenv%E6%90%AD%E5%BB%BAPython%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83"><span class="nav-text">4. 使用pyenv搭建Python虚拟环境</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-%E5%AE%89%E8%A3%85pyenv"><span class="nav-text">4.1 安装pyenv</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-%E4%B8%BApyenv%E6%B7%BB%E5%8A%A0%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="nav-text">4.2 为pyenv添加环境变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-%E5%87%86%E5%A4%87%E7%BC%96%E8%AF%91%E7%8E%AF%E5%A2%83"><span class="nav-text">4.3 准备编译环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-4-pyenv%E7%9A%84%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95"><span class="nav-text">4.4 pyenv的使用方法</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Noah Z. Lin</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Noah-Zhiyi-Lin" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Noah-Zhiyi-Lin" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://stackoverflow.com/users/23175863/noah-z-lin" title="StackOverflow → https:&#x2F;&#x2F;stackoverflow.com&#x2F;users&#x2F;23175863&#x2F;noah-z-lin" rel="noopener me" target="_blank"><i class="fab fa-stack-overflow fa-fw"></i>StackOverflow</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/01/21/Python-Virtual-Environment/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Noah Z. Lin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Noah's Lab">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="如何搭建Python虚拟环境 | Noah's Lab">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          如何搭建Python虚拟环境
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-01-21 23:17:51" itemprop="dateCreated datePublished" datetime="2024-01-21T23:17:51+08:00">2024-01-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-01-22 00:03:34" itemprop="dateModified" datetime="2024-01-22T00:03:34+08:00">2024-01-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6%E4%B8%8E%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">计算机科学与技术</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="1-前言"><a href="#1-前言" class="headerlink" title="1. 前言"></a>1. 前言</h2><p>在使用Python进行开发时，我们经常会遇到以下两个问题：</p>
+<p>1.由于误操作，导致全局Python（依赖）环境被破坏，无法运行。</p>
+<p>2.某个包无法在当前的Python版本下运行。</p>
+<p>对于Linux而言，这两个问题尤为棘手。大多数Linux发行版都自带Python，并且一些系统功能的实现也依赖于Python环境，随意改动系统自带的Python环境，有可能会导致系统无法正常运行。</p>
+<p>解决这两个问题最有效的方法是搭建一个Python虚拟环境。本文介绍两种方法：使用Python自带的<code>venv</code>模块和使用Python环境管理工具<code>pyenv</code>，前者可以快速地搭建一个轻量级的Python虚拟环境，后者则可以在一个系统中安装多个版本的Python，并为某个目录指定该目录下运行的Python版本。</p>
+<p>注：</p>
+<p>本文使用的Linux发行版为Ubuntu。其他发行版用户请自行将文中所用的包管理器替换为所用发行版对应的包管理器。</p>
+<h2 id="2-Python虚拟环境简介"><a href="#2-Python虚拟环境简介" class="headerlink" title="2. Python虚拟环境简介"></a>2. Python虚拟环境简介</h2><p>Python虚拟环境指与系统Python环境隔离的Python环境。每个Python虚拟环境都拥有完全独立的包和依赖关系，即使当前的Python虚拟环境被破坏，其他虚拟环境和系统环境仍能正常运行。</p>
+<p>由于不同项目所需的Python版本、包和依赖关系不同，因此推荐为每个项目都单独设立一个Python虚拟环境，并且在虚拟环境中安装包，而不是在系统环境中安装包。</p>
+<p>注：</p>
+<p>要进一步了解Python虚拟环境，可以访问：<a target="_blank" rel="noopener" href="https://peps.python.org/pep-0405/">PEP 405 – Python Virtual Environments</a>。</p>
+<h2 id="3-使用venv模块搭建Python虚拟环境"><a href="#3-使用venv模块搭建Python虚拟环境" class="headerlink" title="3. 使用venv模块搭建Python虚拟环境"></a>3. 使用venv模块搭建Python虚拟环境</h2><p><code>venv</code>是Python官方提供的用于搭建和管理轻量级Python虚拟环境的模块。</p>
+<p>可以使用如下命令查看系统Python环境中是否已经安装了<code>venv</code>模块：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">apt list python3-venv</span></span><br></pre></td></tr></table></figure>
+
+<p>如果没有安装，则在终端中输入如下命令安装<code>venv</code>模块：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">sudo apt install python3-venv</span></span><br></pre></td></tr></table></figure>
+
+<p>安装完成后，更改工作路径至项目根目录下，在终端中输入：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">python3 -m venv VirEnv</span></span><br></pre></td></tr></table></figure>
+
+<p>其中，<code>VirEnv</code>是虚拟环境的名字，由用户自行决定。此时就已经在当前目录下搭建了一个Python虚拟环境，查看当前目录可以发现一个名为<code>VirEnv</code>的文件夹，虚拟环境中所有的包和文件都会保存在该文件夹中。</p>
+<p>要进入虚拟环境，需要输入：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">source</span> ./VirEnv/bin/activate</span></span><br></pre></td></tr></table></figure>
+
+<p>进入虚拟环境后，用户名前会出现虚拟环境的名字，提示用户当前处在虚拟环境中：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(VirEnv) noah@NoahLin:~/Courses/UCB-CS61A$ </span><br></pre></td></tr></table></figure>
+
+<p>虚拟环境中的Python版本与系统Python版本一致。要退出虚拟环境，只需要输入：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">deactivate</span></span><br></pre></td></tr></table></figure>
+
+<p>即可。</p>
+<p>虚拟环境搭建完成后，我们就可以在虚拟环境中安装当前项目所需的包了，也不需要担心是否会对其他项目造成影响。</p>
+<h2 id="4-使用pyenv搭建Python虚拟环境"><a href="#4-使用pyenv搭建Python虚拟环境" class="headerlink" title="4. 使用pyenv搭建Python虚拟环境"></a>4. 使用pyenv搭建Python虚拟环境</h2><p>使用<code>venv</code>模块虽然能方便快捷地搭建Python虚拟环境，但这种方法有一个致命缺陷，就是所搭建的虚拟环境中的Python版本与系统中的Python版本一致，对于本文开头提到的某个包无法在当前Python版本下运行的问题，用<code>venv</code>就无法解决。</p>
+<p>要搭建Python版本与系统Python版本不一致的虚拟环境，就要用到名为<code>pyenv</code>的Python环境管理工具。通过<code>pyenv</code>，我们就可以在一个系统中安装多个Python版本，并且可以为某个目录指定在该目录及其子目录下运行的Python版本。</p>
+<h3 id="4-1-安装pyenv"><a href="#4-1-安装pyenv" class="headerlink" title="4.1 安装pyenv"></a>4.1 安装pyenv</h3><p><code>pyenv</code>提供了两种安装方法。</p>
+<p><strong>方法一：使用自动安装器</strong></p>
+<p>在终端中输入：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">curl https://pyenv.run | bash</span></span><br></pre></td></tr></table></figure>
+
+<p>就会将<code>pyenv</code>下载至<code>home</code>目录的<code>.pyenv</code>路径下。使用该方法前需要先安装<code>curl</code>：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">sudo apt install curl</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>方法二：使用<code>git</code></strong></p>
+<p>在终端中输入：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git <span class="built_in">clone</span> https://github.com/pyenv/pyenv.git ~/.pyenv</span></span><br></pre></td></tr></table></figure>
+
+<p><code>git</code>就会将<code>pyenv</code>从Github下载至<code>home</code>目录的<code>.pyenv</code>路径下。使用该方法前需要先安装<code>git</code>：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">sudo apt install git</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="4-2-为pyenv添加环境变量"><a href="#4-2-为pyenv添加环境变量" class="headerlink" title="4.2 为pyenv添加环境变量"></a>4.2 为pyenv添加环境变量</h3><p>在安装完成后，还要将<code>pyenv</code>设置为环境变量，才能在终端中使用。具体地说，就是在终端中执行以下命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">echo</span> <span class="string">&#x27;export PYENV_ROOT=&quot;$HOME/.pyenv&quot;&#x27;</span> &gt;&gt; ~/.profile</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">echo</span> <span class="string">&#x27;command -v pyenv &gt;/dev/null || export PATH=&quot;$PYENV_ROOT/bin:$PATH&quot;&#x27;</span> &gt;&gt; ~/.profile</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">echo</span> <span class="string">&#x27;eval &quot;$(pyenv init -)&quot;&#x27;</span> &gt;&gt; ~/.profile</span></span><br></pre></td></tr></table></figure>
+
+<p>或者是在用户目录中打开<code>.bashrc</code>文件，在末尾处添加：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">pyenv</span></span><br><span class="line">export PYENV_ROOT=&quot;$HOME/.pyenv&quot;</span><br><span class="line">command -v pyenv &gt;/dev/null || export PATH=&quot;$PYENV_ROOT/bin:$PATH&quot;</span><br><span class="line">eval &quot;$(pyenv init -)&quot;</span><br></pre></td></tr></table></figure>
+
+<p>设置完成后，重启终端，使设置生效。此时就可以在终端中使用<code>pyenv</code>命令，可以通过<code>pyenv --version</code>（查看<code>pyenv</code>版本）检查是否已正确配置环境变量：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">noah@NoahLin:~$ pyenv --version</span><br><span class="line">pyenv 2.3.35</span><br></pre></td></tr></table></figure>
+
+<p>注：</p>
+<p>1.<code>.profile</code>和<code>.bashrc</code>是Linux中用于保存用户bash配置信息的文件。对于一些用户自行安装（而不是通过包管理器安装）的软件包，需要在<code>.profile</code>和<code>.bashrc</code>中设置对应的环境变量后，才能在bash中使用相关的命令。<code>.profile</code>和<code>.bashrc</code>文件默认隐藏，在用户目录下使用<code>ls -A</code>命令列出当前目录中的所有文件后就可以看到了。</p>
+<p>2.如果每次重启终端后输入<code>pyenv</code>时终端都报告找不到命令（command not found），则应考虑以下两种可能：</p>
+<p>第一，用户的<code>.bash_profile</code>、<code>.bash_login</code>或<code>.profile</code>文件没有设置对<code>.bashrc</code>的引用，具体解决方法可以参考<a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/51876792/why-must-i-source-bashrc-every-time-i-open-terminal-for-aliases-to-work">Why must I source .bashrc every time I open terminal for aliases to work</a>。</p>
+<p>第二，若在设置环境变量时以<code>root</code>身份登录，则可能修改的是<code>root</code>用户的<code>.profile</code>或<code>.bashrc</code>文件而不是普通用户的<code>.profile</code>或<code>.bashrc</code>文件（每个用户都有一个<code>.profile</code>和<code>.bashrc</code>文件）。解决方法是首先确保以普通用户身份登录终端，然后在普通用户的<code>home</code>目录下打开<code>.profile</code>或<code>.bashrc</code>文件，检查是否已经添加<code>pyenv</code>环境变量，若没有，则按前文所述方法添加。同时，如果修改了<code>root</code>用户的<code>.profile</code>或<code>.bashrc</code>文件，还应将其恢复（绝大多数情况下都不需要修改<code>root</code>用户的文件）。</p>
+<p>3.MacOS和Windows下<code>pyenv</code>的安装和配置方法，可以查阅项目的<code>README</code>文档：<a target="_blank" rel="noopener" href="https://github.com/pyenv/pyenv">Simple Python Version Management: pyenv</a>。</p>
+<h3 id="4-3-准备编译环境"><a href="#4-3-准备编译环境" class="headerlink" title="4.3 准备编译环境"></a>4.3 准备编译环境</h3><p>由于<code>pyenv</code>是通过编译Python源代码的方式来安装Python的，因此在使用<code>pyenv</code>之前，还需要准备<code>pyenv</code>所需的编译环境。若跳过这一步直接使用<code>pyenv</code>安装Python，则可能会导致安装时编译失败。</p>
+<p>对于Ubuntu，需要安装下述软件包：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">sudo apt install build-essential libssl-dev zlib1g-dev \</span></span><br><span class="line"><span class="language-bash">libbz2-dev libreadline-dev libsqlite3-dev curl \</span></span><br><span class="line"><span class="language-bash">libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev</span></span><br></pre></td></tr></table></figure>
+
+<p>注：</p>
+<p>其他Linux发行版和MacOS，可以查阅<a target="_blank" rel="noopener" href="https://github.com/pyenv/pyenv/wiki">项目官方Wiki</a>中的Suggested build environment部分来确定需要安装的软件包。</p>
+<h3 id="4-4-pyenv的使用方法"><a href="#4-4-pyenv的使用方法" class="headerlink" title="4.4 pyenv的使用方法"></a>4.4 pyenv的使用方法</h3><p><code>pyenv</code>的常用命令如下所示：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看当前系统Python版本</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">pyenv version</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看已安装的所有Python版本</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">pyenv versions</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">列出所有可安装的Python版本</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">pyenv install --list</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">安装指定Python版本（install后接版本号，以3.8.18版本为例）</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">pyenv install 3.8.18</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">安装完成后刷新</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">pyenv <span class="built_in">rehash</span></span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">指定全局Python版本（以3.8.18版本为例）</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">pyenv global 3.8.18</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">指定当前目录及其子目录下运行的Python版本（以3.8.18版本为例）</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">pyenv <span class="built_in">local</span> 3.8.18</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">卸载指定的Python版本（以3.8.18版本为例）</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">pyenv uninstall 3.8.18</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看所有命令</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">pyenv <span class="built_in">help</span></span></span><br></pre></td></tr></table></figure>
+
+<p><strong>使用<code>pyenv</code>命令安装Python</strong></p>
+<p>如前文所述，在使用<code>pyenv install --list</code>查看可通过<code>pyenv</code>命令直接安装的Python版本后，使用<code>pyenv install</code>即可直接安装想要的版本。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">安装Python3.8.18</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">pyenv install 3.8.18</span></span><br></pre></td></tr></table></figure>
+
+<p>这个命令会从从Python官方源下载Python源代码包，并进行编译。如果因为网络问题导致下载较慢或者下载失败，则可以考虑下面介绍的方法。</p>
+<p><strong>使用本地源代码包安装Python</strong></p>
+<p>由于Python官方源的服务器在国外，国内直连的速度比较慢（甚至可能无法连接），因此可以考虑从国内镜像站下载Python源代码包，然后再用<code>pyenv</code>编译。</p>
+<p>进入国内镜像站，找到想要安装的Python版本，点击进入详情页：<a target="_blank" rel="noopener" href="https://registry.npmmirror.com/binary.html?path=python/">CNPM Binaries Mirror</a>。</p>
+<img src="/2024/01/21/Python-Virtual-Environment/image1.png" class="">
+
+<p>以Python 3.18.8为例，在图中的<strong>Python-3.8.18.tar.xz</strong>处点击右键，复制下载链接。然后用<code>wget</code>命令将源代码包下载至<code>pyenv</code>的缓存目录，下载完成后再使用<code>pyenv install</code>安装即可：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">下载Python源代码包</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">wget https://registry.npmmirror.com/-/binary/python/3.8.18/Python-3.8.18.tar.xz -P ~/.pyenv/cache</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">安装Python</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">pyenv install 3.8.18</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>为项目指定Python版本</strong></p>
+<p>将工作路径切换至项目根目录下，首先查看当前的Python版本，此时的版本就是系统环境中的版本：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">noah@NoahLin:~/Courses/UCB-CS61A$ python3 --version</span><br><span class="line">Python 3.10.12</span><br></pre></td></tr></table></figure>
+
+<p>使用<code>pyenv local</code>命令，即可将项目中运行的Python版本设定为命令中指定的版本。以Python 3.8.18为例，输入：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">pyenv <span class="built_in">local</span> 3.8.18</span></span><br></pre></td></tr></table></figure>
+
+<p>再查看当前目录下的Python版本：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">noah@NoahLin:~/Courses/UCB-CS61A$ python3 --version</span><br><span class="line">Python 3.8.18</span><br></pre></td></tr></table></figure>
+
+<p>版本号为3.8.18，意味着成功将项目中运行的Python版本设定为Python 3.8.18。</p>
+<p>参考教程：</p>
+<p><a target="_blank" rel="noopener" href="https://juejin.cn/post/7296755101623074856#heading-12">一文搞定 Linux 中 Python 环境&#x2F;版本管理</a>。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag"># 学习笔记</a>
+              <a href="/tags/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/" rel="tag"># 编程语言</a>
+              <a href="/tags/Python/" rel="tag"># Python</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/01/21/Line-Break-in-Terminal/" rel="prev" title="C++专题：C++与交互式终端中的换行符">
+                  <i class="fa fa-angle-left"></i> C++专题：C++与交互式终端中的换行符
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="" id="animate">
+    <i class="fa-solid fa-code"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Noah Z. Lin</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://noah-zhiyi-lin.github.io/" rel="noopener" target="_blank">Noah Zhiyi Lin</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
