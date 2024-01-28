@@ -925,7 +925,7 @@
 <p>只要指针拥有一个合法值，就能将它用在条件表达式中，当指针的值为0时，条件为<code>false</code>，否则为<code>true</code>。</p>
 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> ival = <span class="number">1024</span>;</span><br><span class="line"><span class="type">int</span> *pi = <span class="literal">nullptr</span>;<span class="comment">// pi是空指针，值为0。</span></span><br><span class="line"><span class="type">int</span> *pi2 = &amp;ival;<span class="comment">// pi2的值是ival的内存地址。</span></span><br><span class="line"><span class="keyword">if</span> (pi) <span class="comment">// pi的值为0，条件为false。</span></span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line"><span class="keyword">if</span> (pi2) <span class="comment">// pi2的值不为0，条件为true。</span></span><br><span class="line">    <span class="comment">// ...</span></span><br></pre></td></tr></table></figure>
 
-<p>对于两个类型相同的合法指针，可以用相等操作符（<code>==</code>）和不相等操作符（<code>!=</code>）进行比较，比较的结果是布尔值。如果两个指针存放着相同的地址值，则它们相等，反之则不相等。两个指针存放的地址值相同（两个指针相等）有三种可能：都为空指针、都指向同一个对象或都指向同一个对象的下一个地址。需要注意的是，一个指针指向某对象，另一个指针指向该对象的下一个地址，此时也可能出现这两个指针存放的内存地址值相同的情况，即指针相等（当对象的数据结构是特殊的环形结构时就可能出现这种情况）。</p>
+<p>对于两个类型相同的合法指针，可以用相等操作符（<code>==</code>）和不相等操作符（<code>!=</code>）进行比较，比较的结果是布尔值。如果两个指针存放着相同的地址值，则它们相等，反之则不相等。两个指针存放的地址值相同（两个指针相等）有三种可能：都为空指针、都指向同一个对象或都指向同一个对象的下一个地址。需要注意的是，一个指针指向某对象，同时另一个指针指向另外对象的下一地址，此时也有可能出现这两个指针存放的内存地址值相同的情况。</p>
 <p><strong>void*指针</strong></p>
 <p><code>void*</code>指针是一种特殊的指针，可以存放任意对象的地址：</p>
 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">void</span> *pv = &amp;obj;<span class="comment">// obj可以是任意类型的对象。</span></span><br></pre></td></tr></table></figure>
