@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Computer Philosophy</title>
+        <link>https://noah-zhiyi-lin.github.io/</link>
+        <description>Recent content on Computer Philosophy</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>en-us</language>
+        <lastBuildDate>Thu, 05 Sep 2024 14:52:32 +0800</lastBuildDate><atom:link href="https://noah-zhiyi-lin.github.io/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Hello World</title>
+        <link>https://noah-zhiyi-lin.github.io/posts/hello-world/</link>
+        <pubDate>Thu, 05 Sep 2024 14:52:32 +0800</pubDate>
+        
+        <guid>https://noah-zhiyi-lin.github.io/posts/hello-world/</guid>
+        <description>&lt;p&gt;&lt;strong&gt;Hello World!&lt;/strong&gt;&lt;/p&gt;
+</description>
+        </item>
+        
+    </channel>
+</rss>
