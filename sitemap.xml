@@ -2,8 +2,14 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://noah-zhiyi-lin.github.io/page/about/</loc>
+    <lastmod>2024-09-06T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://noah-zhiyi-lin.github.io/</loc>
-    <lastmod>2024-09-05T14:52:32+08:00</lastmod>
+    <lastmod>2024-09-06T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://noah-zhiyi-lin.github.io/page/</loc>
+    <lastmod>2024-09-06T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://noah-zhiyi-lin.github.io/posts/hello-world/</loc>
     <lastmod>2024-09-05T14:52:32+08:00</lastmod>
@@ -13,12 +19,6 @@
   </url><url>
     <loc>https://noah-zhiyi-lin.github.io/page/archives/</loc>
     <lastmod>2019-05-28T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://noah-zhiyi-lin.github.io/page/</loc>
-    <lastmod>2020-10-09T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://noah-zhiyi-lin.github.io/page/about/</loc>
-    <lastmod>2020-10-09T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://noah-zhiyi-lin.github.io/categories/</loc>
   </url><url>

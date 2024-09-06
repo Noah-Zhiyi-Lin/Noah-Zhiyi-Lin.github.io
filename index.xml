@@ -6,7 +6,19 @@
         <description>Recent content on Computer Philosophy</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Thu, 05 Sep 2024 14:52:32 +0800</lastBuildDate><atom:link href="https://noah-zhiyi-lin.github.io/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Fri, 06 Sep 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://noah-zhiyi-lin.github.io/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>About</title>
+        <link>https://noah-zhiyi-lin.github.io/page/about/</link>
+        <pubDate>Fri, 06 Sep 2024 00:00:00 +0000</pubDate>
+        
+        <guid>https://noah-zhiyi-lin.github.io/page/about/</guid>
+        <description>&lt;p&gt;Welcome to Computer Philosophy!&lt;/p&gt;
+&lt;p&gt;I am Noah, a student studying in Software Engineering at Nankai University, and my research interests are Algorithm Design, Computational Biology and Artificial Inteligence.&lt;/p&gt;
+&lt;p&gt;This website is used to store my notes and thoughts. To know more about my projects, please visit my &lt;a class=&#34;link&#34; href=&#34;https://github.com/Noah-Zhiyi-Lin&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;GitHub Homepage&lt;/a&gt;. If you are intereted in some topics and want to discuss with me, feel free to contact me by &lt;a class=&#34;link&#34; href=&#34;mailto:noah-zhiyi-lin@outlook.com&#34; &gt;noah-zhiyi-lin@outlook.com&lt;/a&gt;!&lt;/p&gt;
+</description>
+        </item>
+        <item>
         <title>Hello World</title>
         <link>https://noah-zhiyi-lin.github.io/posts/hello-world/</link>
         <pubDate>Thu, 05 Sep 2024 14:52:32 +0800</pubDate>
@@ -28,34 +40,6 @@
         
         <guid>https://noah-zhiyi-lin.github.io/page/archives/</guid>
         <description></description>
-        </item>
-        <item>
-        <title>About</title>
-        <link>https://noah-zhiyi-lin.github.io/page/about/</link>
-        <pubDate>Thu, 28 Feb 2019 00:00:00 +0000</pubDate>
-        
-        <guid>https://noah-zhiyi-lin.github.io/page/about/</guid>
-        <description>&lt;p&gt;Written in Go, Hugo is an open source static site generator available under the &lt;a class=&#34;link&#34; href=&#34;https://github.com/gohugoio/hugo/blob/master/LICENSE&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;Apache License 2.0.&lt;/a&gt; Hugo supports TOML, YAML and JSON data file types, Markdown and HTML content files and uses shortcodes to add rich content. Other notable features are taxonomies, multilingual mode, image processing, custom output formats, HTML/CSS/JS minification and support for Sass SCSS workflows.&lt;/p&gt;
-&lt;p&gt;Hugo makes use of a variety of open source projects including:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://github.com/yuin/goldmark&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;https://github.com/yuin/goldmark&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://github.com/alecthomas/chroma&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;https://github.com/alecthomas/chroma&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://github.com/muesli/smartcrop&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;https://github.com/muesli/smartcrop&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://github.com/spf13/cobra&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;https://github.com/spf13/cobra&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://github.com/spf13/viper&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;https://github.com/spf13/viper&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Hugo is ideal for blogs, corporate websites, creative portfolios, online magazines, single page applications or even a website with thousands of pages.&lt;/p&gt;
-&lt;p&gt;Hugo is for people who want to hand code their own website without worrying about setting up complicated runtimes, dependencies and databases.&lt;/p&gt;
-&lt;p&gt;Websites built with Hugo are extremely fast, secure and can be deployed anywhere including, AWS, GitHub Pages, Heroku, Netlify and any other hosting provider.&lt;/p&gt;
-&lt;p&gt;Learn more and contribute on &lt;a class=&#34;link&#34; href=&#34;https://github.com/gohugoio&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;GitHub&lt;/a&gt;.&lt;/p&gt;
-</description>
         </item>
         <item>
         <title>Links</title>
